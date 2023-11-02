@@ -1,4 +1,7 @@
 # Login
+
+*To use this prototype you must manually specify the users.txt path in the loginForm and registerForm class*
+
 Basic Login Interface Java Swing
 Login Interface (LoginForm):
 
