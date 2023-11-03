@@ -1,3 +1,4 @@
+
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Toolkit;
@@ -8,37 +9,34 @@ import java.io.FileReader;
 import java.io.IOException;
 import javax.swing.JOptionPane;
 
-
+//By Javier Castillo
 public class loginForm extends javax.swing.JFrame {
 
-    
     public loginForm() {
-        
+
         setUndecorated(true);
-
         initComponents();
+
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-    int x = (screenSize.width - getWidth()) / 2;
-    int y = (screenSize.height - getHeight()) / 2;
-    setLocation(x, y);
-          TypePassword.setBackground(new Color(255, 255, 255, 0));
-    TypeUsername.setBackground(new Color(255, 255, 255, 0));
+        int x = (screenSize.width - getWidth()) / 2;
+        int y = (screenSize.height - getHeight()) / 2;
+        setLocation(x, y);
 
-        
+        TypePassword.setBackground(new Color(255, 255, 255, 0));
+        TypeUsername.setBackground(new Color(255, 255, 255, 0));
+
         noVisible.addMouseListener(new MouseAdapter() {
-    @Override
-    public void mouseClicked(MouseEvent e) {
-     TypePassword.setEchoChar((char) 0); 
-        noVisible.setVisible(false);
-        visible.setVisible(true);
-    
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                TypePassword.setEchoChar((char) 0);
+                noVisible.setVisible(false);
+                visible.setVisible(true);
+            }
+
+        });
+
     }
-});
 
-
-    }
-
-   
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -188,93 +186,90 @@ public class loginForm extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void registerHereMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_registerHereMouseClicked
-          registerForm register = new registerForm();
-    register.setVisible(true);
 
-    // Cierra la ventana actual (loginForm) si es necesario
-    dispose();
+        registerForm register = new registerForm();
+        register.setVisible(true);
+
+        dispose();
     }//GEN-LAST:event_registerHereMouseClicked
 
     private void loginBotonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_loginBotonMouseClicked
-    
-    String username = TypeUsername.getText();
-    String password = new String(TypePassword.getPassword());
-   
 
-    
+        String username = TypeUsername.getText();
+        String password = new String(TypePassword.getPassword());
 
-    // Verifica si los campos están vacíos
-    boolean hasEmptyFields = false;
+        boolean hasEmptyFields = false;
 
-    if (username.isEmpty()) {
-        TypeUsername.setText("Username is required");
-        hasEmptyFields = true;
- 
-    }
+        if (username.isEmpty()) {
+            TypeUsername.setText("Username is required");
+            hasEmptyFields = true;
 
-    if (password.isEmpty()) {
-        TypePassword.setText("Password is required");
-        hasEmptyFields = true;
-    }
-
-    // Configura MouseListeners en los campos de texto para borrar los mensajes de alerta cuando el usuario haga clic en ellos
-
-
-    TypeUsername.addMouseListener(new MouseAdapter() {
-        @Override
-        public void mouseClicked(MouseEvent e) {
-            if (TypeUsername.getText().equals("Username is required")) {
-                TypeUsername.setText("");
-            }
         }
-    });
 
-    TypePassword.addMouseListener(new MouseAdapter() {
-        @Override
-        public void mouseClicked(MouseEvent e) {
-            if (TypePassword.getText().equals("Password is required")) {
-                TypePassword.setText("");
-            }
+        if (password.isEmpty()) {
+            TypePassword.setText("Password is required");
+            hasEmptyFields = true;
         }
-    });
 
-    if (!hasEmptyFields) {
-           boolean credentialsMatch = false;
-        try {
-            BufferedReader reader = new BufferedReader(new FileReader("C:\\Users\\Usuario\\OneDrive\\Documentos\\NetBeansProjects\\Login\\users.txt"));
-            String line;
-            while ((line = reader.readLine()) != null) {
-                String[] parts = line.split(",");
-                if (parts.length == 4) {
-                    String storedUsername = parts[2];
-                    String storedPassword = parts[3];
-                    if (username.equals(storedUsername) && password.equals(storedPassword)) {
-                        credentialsMatch = true;
-                        break;
+        TypeUsername.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (TypeUsername.getText().equals("Username is required")) {
+                    TypeUsername.setText("");
+                }
+
+            }
+
+        });
+
+        TypePassword.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (TypePassword.getText().equals("Password is required")) {
+                    TypePassword.setText("");
+                }
+
+            }
+
+        });
+
+        if (!hasEmptyFields) {
+            boolean credentialsMatch = false;
+            try {
+                BufferedReader reader = new BufferedReader(new FileReader("C:\\Users\\Usuario\\OneDrive\\Documentos\\NetBeansProjects\\Login\\users.txt"));
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    String[] parts = line.split(",");
+                    if (parts.length == 4) {
+                        String storedUsername = parts[2];
+                        String storedPassword = parts[3];
+                        if (username.equals(storedUsername) && password.equals(storedPassword)) {
+                            credentialsMatch = true;
+                            break;
+                        }
                     }
                 }
+                reader.close();
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-            reader.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
 
-        if (credentialsMatch) {
-            JOptionPane.showMessageDialog(this, "Login successful", "Success", JOptionPane.INFORMATION_MESSAGE);
-            // Redirige al usuario a la ventana de éxito u otras acciones.
-        } else {
-            TypeUsername.setText("Invalid username or password");
-            TypePassword.setText("");
-        }
-        TypeUsername.addMouseListener(new MouseAdapter() {
-        @Override
-        public void mouseClicked(MouseEvent e) {
-            if (TypeUsername.getText().equals("Invalid username or password")) {
-                TypeUsername.setText("");
+            if (credentialsMatch) {
+                JOptionPane.showMessageDialog(this, "Login successful", "Success", JOptionPane.INFORMATION_MESSAGE);
+
+            } else {
+                TypeUsername.setText("Invalid username or password");
+                TypePassword.setText("");
             }
+            TypeUsername.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    if (TypeUsername.getText().equals("Invalid username or password")) {
+                        TypeUsername.setText("");
+                    }
+                }
+            });
         }
-    });
-    }
 
     }//GEN-LAST:event_loginBotonMouseClicked
 
@@ -284,50 +279,42 @@ public class loginForm extends javax.swing.JFrame {
 
     private void forgotPasswordMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_forgotPasswordMouseClicked
         recoveryPassword recoveryPasswordForm = new recoveryPassword();
-    
-    
-    recoveryPasswordForm.setVisible(true);
-    
-    this.dispose();
+
+        recoveryPasswordForm.setVisible(true);
+
+        this.dispose();
     }//GEN-LAST:event_forgotPasswordMouseClicked
 
     private void noVisibleMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_noVisibleMouseClicked
-       if (TypePassword.getEchoChar() == '\0') {
-        // La contraseña es visible, cambia a oculta
-        TypePassword.setEchoChar('*');
-        noVisible.setVisible(true);
-        visible.setVisible(false);
-    } else {
-        // La contraseña está oculta, cambia a visible
-        TypePassword.setEchoChar('\0');
-        noVisible.setVisible(false);
-        visible.setVisible(true);
-    }
+        if (TypePassword.getEchoChar() == '\0') {
+
+            TypePassword.setEchoChar('*');
+            noVisible.setVisible(true);
+            visible.setVisible(false);
+        } else {
+
+            TypePassword.setEchoChar('\0');
+            noVisible.setVisible(false);
+            visible.setVisible(true);
+        }
     }//GEN-LAST:event_noVisibleMouseClicked
 
     private void visibleMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_visibleMouseClicked
         if (TypePassword.getEchoChar() == '\0') {
-        // La contraseña es visible, cambia a oculta
-        TypePassword.setEchoChar('*');
-        noVisible.setVisible(true);
-        visible.setVisible(false);
-    } else {
-        // La contraseña está oculta, cambia a visible
-        TypePassword.setEchoChar('\0');
-        noVisible.setVisible(false);
-        visible.setVisible(true);
-    }
+
+            TypePassword.setEchoChar('*');
+            noVisible.setVisible(true);
+            visible.setVisible(false);
+        } else {
+
+            TypePassword.setEchoChar('\0');
+            noVisible.setVisible(false);
+            visible.setVisible(true);
+        }
     }//GEN-LAST:event_visibleMouseClicked
 
-    /**
-     * @param args the command line arguments
-     */
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
+
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
@@ -344,9 +331,7 @@ public class loginForm extends javax.swing.JFrame {
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(loginForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
 
-        /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new loginForm().setVisible(true);

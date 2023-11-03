@@ -1,2 +1,3 @@
 javier,javier@gmail.com,javier54,alonso10
 alberto,alberto@gmail.com,alberto33,holamundo
+brayan osorio,braynx@gmail.com,elbrayan,soygay
